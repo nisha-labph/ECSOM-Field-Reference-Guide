@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECSOM Field Reference Guide — Isabela de Basilan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Karla:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:       #0A7E7E;
+    --teal-light: #12A0A0;
+    --teal-pale:  #E6F5F5;
+    --gold:       #C49A2A;
+    --gold-light: #F0D880;
+    --gold-pale:  #FBF5E0;
+    --navy:       #162847;
+    --navy-mid:   #243A60;
+    --slate:      #4A5568;
+    --mist:       #F4F7F9;
+    --border:     #D8E4EC;
+    --white:      #FFFFFF;
+    --sidebar-w:  280px;
+    --red-alert:  #C0392B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Karla', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--navy);
+    background: var(--mist);
+    display: flex;
+  }
+
+  /* ── SIDEBAR ───────────────────────────────────────── */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--navy);
+    position: fixed;
+    top: 0; left: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+  }
+
+  #sidebar-header {
+    background: var(--teal);
+    padding: 1.5rem 1.25rem 1.25rem;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  #sidebar-header .prog-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  #sidebar-header h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  #sidebar-header .subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 0.35rem;
+    font-style: italic;
+  }
+
+  .nav-section {
+    padding: 1rem 0 0.25rem;
+  }
+
+  .nav-section-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    padding: 0 1.25rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 0.45rem 1.25rem 0.45rem 1.5rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+
+  .nav-item:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.07);
+    border-left-color: var(--gold);
+  }
+
+  .nav-item.active {
+    color: var(--white);
+    background: rgba(10,126,126,0.35);
+    border-left-color: var(--teal-light);
+  }
+
+  .nav-item .kawman-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--white);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-sub {
+    padding: 0.3rem 1.25rem 0.3rem 2.25rem;
+    display: block;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.15s;
+    line-height: 1.4;
+  }
+  .nav-sub:hover { color: rgba(255,255,255,0.85); }
+
+  /* ── MAIN CONTENT ─────────────────────────────────── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ── COVER ────────────────────────────────────────── */
+  #cover {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, var(--teal) 100%);
+    padding: 4.5rem 3.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,154,42,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--teal-light) 100%);
+  }
+
+  .cover-eyebrow {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cover-eyebrow::before {
+    content: '';
+    width: 28px; height: 2px;
+    background: var(--gold);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  #cover h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 700px;
+    margin-bottom: 1rem;
+  }
+
+  #cover .cover-sub {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .cover-meta-item {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cover-meta-item strong {
+    color: rgba(255,255,255,0.9);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ── CONFIDENTIAL BANNER ──────────────────────────── */
+  .confid-banner {
+    background: #2C1810;
+    border-left: 4px solid var(--red-alert);
+    padding: 1rem 2rem;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #F5D5C8;
+  }
+  .confid-banner strong { color: #FF8C70; }
+
+  /* ── CONTENT AREA ─────────────────────────────────── */
+  .content-wrap {
+    padding: 2.5rem 3rem;
+    max-width: 1000px;
+  }
+
+  /* ── SECTIONS ─────────────────────────────────────── */
+  .section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-num {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    width: 52px; height: 52px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .section-title-block { flex: 1; }
+
+  .section-title-block h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+
+  .section-title-block .section-desc {
+    font-size: 13px;
+    color: var(--slate);
+    margin-top: 0.2rem;
+    font-style: italic;
+  }
+
+  /* ── KAWMAN BADGE in headers ─────────────────── */
+  .kawman-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--teal-pale);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── VALIDATION QUESTION ──────────────────────── */
+  .validation-q {
+    background: var(--gold-pale);
+    border-left: 4px solid var(--gold);
+    padding: 0.9rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--navy-mid);
+  }
+  .validation-q strong {
+    font-style: normal;
+    color: var(--navy);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Karla', sans-serif;
+  }
+
+  /* ── SUBSECTIONS ──────────────────────────────── */
+  .subsection {
+    margin-bottom: 2rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .subsection h3 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .subsection h3::before {
+    content: '';
+    width: 14px; height: 2px;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .subsection h4 {
+    font-family: 'Karla', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  /* ── TABLES ───────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(22,40,71,0.08);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    background: var(--white);
+  }
+
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child  { border-radius: 0 8px 0 0; }
+
+  tbody tr:nth-child(even) { background: var(--mist); }
+  tbody tr:hover { background: var(--teal-pale); transition: background 0.1s; }
+
+  td {
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  td:first-child {
+    font-weight: 600;
+    color: var(--navy-mid);
+    white-space: nowrap;
+    font-size: 12.5px;
+  }
+
+  /* Overview table special */
+  .overview-table td:first-child { white-space: normal; min-width: 130px; }
+  .overview-table td:nth-child(3) { min-width: 180px; }
+  .overview-table td:nth-child(4) { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+
+  /* Alternate header colours per kawman */
+  .k1 thead th { background: #0A5F6A; }
+  .k2 thead th { background: #1A3A60; }
+  .k3 thead th { background: #4A3060; }
+  .k4 thead th { background: #5A3000; }
+  .k5 thead th { background: #1A4A20; }
+
+  /* ── CONFIDENCE CODES ─────────────────────────── */
+  .conf-table thead th { background: var(--slate); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .badge-L { background: #B7950B; }
+  .badge-M { background: var(--teal); }
+  .badge-H { background: #1A6B3A; }
+  .badge-C { background: var(--navy); }
+
+  /* ── CEESAM LINKAGE BOXES ─────────────────────── */
+  .ceesam-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .ceesam-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-size: 13px;
+  }
+
+  .ceesam-card .trigger {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .ceesam-card .action {
+    font-size: 12.5px;
+    color: var(--slate);
+  }
+
+  /* ── FINAL REMINDER ───────────────────────────── */
+  .final-reminder {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+    color: var(--white);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-reminder::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 20px;
+    font-size: 120px;
+    color: rgba(255,255,255,0.06);
+    font-family: 'Crimson Pro', serif;
+    line-height: 1;
+  }
+
+  /* ── FOOTER ───────────────────────────────────── */
+  #footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.45);
+    font-size: 11.5px;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #footer strong { color: rgba(255,255,255,0.75); }
+
+  /* ── PRINT ────────────────────────────────────── */
+  @media print {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .section { page-break-inside: avoid; }
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────── */
+  @media (max-width: 820px) {
+    :root { --sidebar-w: 0px; }
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .content-wrap { padding: 1.5rem; }
+    #cover { padding: 2.5rem 1.5rem; }
+    #cover h1 { font-size: 2rem; }
+    .ceesam-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <span class="prog-label">Community OS Research Toolkit</span>
+    <h1>ECSOM Field Reference Guide</h1>
+    <div class="subtitle">Isabela de Basilan · v2.1, 2026</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Overview</div>
+    <a class="nav-item" href="#cover">Cover &amp; Confidentiality</a>
+    <a class="nav-item" href="#s0">Five Kawmans Quick Reference</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Kawman Sections</div>
+
+    <a class="nav-item" href="#k1"><span class="kawman-badge">K1</span> Coastal</a>
+    <a class="nav-sub" href="#k1-1">K1.1 Photovoice</a>
+    <a class="nav-sub" href="#k1-2">K1.2 Root Cause Tree</a>
+    <a class="nav-sub" href="#k1-3">K1.3 Iceberg</a>
+    <a class="nav-sub" href="#k1-4">K1.4 Causal Loop</a>
+    <a class="nav-sub" href="#k1-5">K1.5 IAD Framework</a>
+    <a class="nav-sub" href="#k1-6">K1.6 KII Questions</a>
+    <a class="nav-sub" href="#k1-7">K1.7 FGD Themes</a>
+    <a class="nav-sub" href="#k1-8">K1.8 Governance Map</a>
+
+    <a class="nav-item" href="#k2"><span class="kawman-badge">K2</span> CBD</a>
+    <a class="nav-sub" href="#k2-1">K2.1 Photovoice</a>
+    <a class="nav-sub" href="#k2-2">K2.2 Root Cause / Iceberg</a>
+    <a class="nav-sub" href="#k2-3">K2.3 KII &amp; FGD Themes</a>
+    <a class="nav-sub" href="#k2-4">K2.4 Governance &amp; IAD</a>
+
+    <a class="nav-item" href="#k3"><span class="kawman-badge">K3</span> East</a>
+    <a class="nav-sub" href="#k3-1">K3.1 Photovoice &amp; Root Cause</a>
+    <a class="nav-sub" href="#k3-2">K3.2 KII &amp; FGD Themes</a>
+    <a class="nav-sub" href="#k3-3">K3.3 Governance &amp; IAD</a>
+
+    <a class="nav-item" href="#k4"><span class="kawman-badge">K4</span> West</a>
+    <a class="nav-sub" href="#k4-1">K4.1 Photovoice &amp; Root Cause</a>
+    <a class="nav-sub" href="#k4-2">K4.2 IAD Framework</a>
+    <a class="nav-sub" href="#k4-3">K4.3 KII &amp; FGD Themes</a>
+
+    <a class="nav-item" href="#k5"><span class="kawman-badge">K5</span> Upland</a>
+    <a class="nav-sub" href="#k5-1">K5.1 Photovoice</a>
+    <a class="nav-sub" href="#k5-2">K5.2 Root Cause &amp; CLD</a>
+    <a class="nav-sub" href="#k5-3">K5.3 IAD Framework</a>
+    <a class="nav-sub" href="#k5-4">K5.4 KII &amp; FGD Themes</a>
+    <a class="nav-sub" href="#k5-5">K5.5 Governance &amp; Pentahelix</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Protocol</div>
+    <a class="nav-item" href="#s6">Cross-Kawman Instruments</a>
+    <a class="nav-item" href="#s7">How to Use This Guide</a>
+    <a class="nav-sub" href="#conf-codes">Confidence Code System</a>
+    <a class="nav-sub" href="#ceesam-link">CEESAM Linkage</a>
+  </div>
+</nav>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<div id="main">
+
+  <!-- COVER -->
+  <div id="cover">
+    <div class="cover-eyebrow">Community OS Research Toolkit · Isabela de Basilan</div>
+    <h1>ECSOM Field Reference Guide — Complete</h1>
+    <div class="cover-sub">Pre-filled Sample Answers · All Five Kawmans · All Instruments · For Research Team Use Only</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span>Programme</span>
+        <strong>Community OS / CEESAM</strong>
+      </div>
+      <div class="cover-meta-item">
+        <span>Pilot Site</span>
+        <strong>Isabela de Basilan, BARMM</strong>
+      </div>
+      <div class="cover-meta-item">
+        <span>Version</span>
+        <strong>v2.1 · 2026</strong>
+      </div>
+      <div class="cover-meta-item">
+        <span>Implementor</span>
+        <strong>LAB.PH · Roxas-Kalaw Foundation · SKRI</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIDENTIAL BANNER -->
+  <div class="confid-banner">
+    <strong>⚠ CONFIDENTIAL — RESEARCH TEAM USE ONLY.</strong>
+    Pre-filled sample answers grounded in ECSOM/CEESAM secondary data. Use as:
+    (1) <strong>validation benchmark</strong> — divergence is a finding, not error;
+    (2) <strong>prompt bank</strong> when sessions stall;
+    (3) <strong>training tool</strong> before deployment.
+    Confidence code: <strong>M</strong> (secondary + admin KII). Community response = code <strong>C</strong>.
+    When C and M conflict, <strong>C wins.</strong>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- ── SECTION 0: MASTER OVERVIEW ─────────────── -->
+    <section class="section" id="s0">
+      <div class="section-header">
+        <div class="section-num">0</div>
+        <div class="section-title-block">
+          <h2>Master Overview — Five Kawmans</h2>
+          <div class="section-desc">Quick Reference</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="overview-table">
+          <thead>
+            <tr>
+              <th>Kawman</th>
+              <th>Role</th>
+              <th>Key Barangays</th>
+              <th>Signature ECSOM Figures</th>
+              <th>Instruments Most Relevant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1 — Coastal</strong></td>
+              <td>Logistics &amp; Aquaculture</td>
+              <td>Port Area · Marang-Marang · Malamawi · Seaside/Begang</td>
+              <td>Fisheries LQ 3.84 · Marine output 3,200 MT / 2,100 MT outflow · 19 mangrove species · ~₱28B gross output</td>
+              <td>IAD · Photovoice · KII (BFAR/CAgO) · FGD Cohorts C4, C5, C6 · Governance</td>
+            </tr>
+            <tr>
+              <td><strong>2 — CBD</strong></td>
+              <td>Finance &amp; Administration</td>
+              <td>Isabela Proper · Aguada · Riverside</td>
+              <td>Services ~44.7% GDP · Trade &amp; Services multiplier 1.47 · Banks + cooperatives + City Hall</td>
+              <td>Root Cause · Governance · KII (LGU/BARMM) · FGD all cohorts · Pentahelix</td>
+            </tr>
+            <tr>
+              <td><strong>3 — East</strong></td>
+              <td>Urban Expansion</td>
+              <td>Sunrise · Eastside · Baluno · Begang · Binuangan · Busay</td>
+              <td>Construction &amp; utilities demand · 100% diesel grid constraint · Urbanisation outpacing services</td>
+              <td>Root Cause · Iceberg · FGD Cohorts C3, C4, C5 · Governance</td>
+            </tr>
+            <tr>
+              <td><strong>4 — West</strong></td>
+              <td>Industrial Core</td>
+              <td>Menzi · Cabunbata · Maligue · San Rafael</td>
+              <td>Mfg multiplier 1.76 (highest) · Rubber 9,500 MT inflow / 8,800 MT outflow · BRICKS circular economy</td>
+              <td>IAD · Root Cause · CLD · KII (Business/DTI) · FGD C5, C7 · Pentahelix</td>
+            </tr>
+            <tr>
+              <td><strong>5 — Upland</strong></td>
+              <td>Resource Base</td>
+              <td>Kapayawan · Kapatagan Grande · Lukbuton · Sumagdang</td>
+              <td>95% vegetable import leakage · 2 CADTs pending for 3 ICCs · Yakan subsistence · Agri multiplier inputs</td>
+              <td>IAD · Photovoice · Root Cause · KII (IP leaders/CAgO) · FGD C6, C5 · Pentahelix</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════ KAWMAN 1 ══════════ -->
+    <section class="section" id="k1">
+      <div class="section-header">
+        <div class="section-num" style="background:var(--teal)">1</div>
+        <div class="section-title-block">
+          <div class="kawman-tag">Kawman 1 — Coastal</div>
+          <h2>Logistics, Aquaculture, Sama Dilaut Community, Port of Isabela</h2>
+        </div>
+      </div>
+
+      <div class="validation-q">
+        <strong>Key Validation Question</strong>
+        Does the community experience the <em>utang</em> (advance financing) trap as a structural constraint, or as individual financial mismanagement? The answer reveals whether conscientisation has occurred.
+      </div>
+
+      <!-- K1.1 -->
+      <div class="subsection" id="k1-1">
+        <h3>K1.1 — Photovoice Prosperity Mapping</h3>
+        <p style="font-size:13px;color:var(--slate);margin-bottom:0.75rem;">Prosperity domain lens: <em>Foundations of Prosperity</em> (material security) + <em>Belonging, Identities &amp; Culture</em> (Sama Dilaut sea-based identity).</p>
+        <h4>SHOWed — Sample Caption: "Sama stilt houses at dawn"</h4>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>SHOWed</th><th>Sample Caption</th><th>Conv./Div.?</th></tr></thead>
+            <tbody>
+              <tr><td>S — See</td><td>Wooden stilt houses over shallow water. Kumpit fishing boats tied alongside. Children on the walkway. Mangroves visible in the background. Solar lamp on one post — the only light source.</td><td></td></tr>
+              <tr><td>H — Happening</td><td>A Sama Dilaut family begins the fishing day. The houses are built over water because the community holds no land title — the sea is literally their home, not a metaphor.</td><td></td></tr>
+              <tr><td>O — Our lives</td><td>Prosperity here means: access to the sea, proximity to the mangrove nursery, freedom to fish. But it is fragile — no electricity, no potable water, no recognised tenure, no safety net if the fish run out.</td><td></td></tr>
+              <tr><td>W — Why</td><td>Sama Dilaut are historically marginalised even within Basilan's IP communities. They hold no CADT. Port modernisation and reclamation projects threaten their grounds. The LGU's CLUP does not recognise their stilt settlements as permanent.</td><td></td></tr>
+              <tr><td>ed — Do</td><td>Advocate inclusion in the CADT process or an alternative tenure instrument. Map fishing grounds and mangrove stewardship zones into CEESAM. Propose a co-managed MPA recognising traditional use rights. Engage MMWA (Marang-Marang Women's Assoc.) as model.</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Prosperity Model — K1 Indicators</h4>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Domain</th><th>What Thriving Looks Like (K1 Aspiration)</th><th>What Absence Looks Like (Current)</th></tr></thead>
+            <tbody>
+              <tr><td>Belonging &amp; Culture</td><td>Sama Dilaut maritime identity and adat recognised by LGU; stilt house community protected</td><td>Settlements excluded from CLUP; no CADT; identity invisible in official planning</td></tr>
+              <tr><td>Foundations</td><td>Security of tenure + reliable income from fisheries + access to credit without utang</td><td>No cold chain → forced selling; utang trap; no savings mechanism; no insurance</td></tr>
+              <tr><td>Health</td><td>Clean water, potable access, MMWA managing mangrove nursery</td><td>No potable water on stilt houses; limited BHERT access to coastal barangays</td></tr>
+              <tr><td>Opportunities</td><td>Ecotourism + Halal processing adding income channels; youth trained as marine stewards</td><td>Youth out-migration to Zamboanga/Sabah; no vocational training for processing</td></tr>
+              <tr><td>Power &amp; Voice</td><td>Sama council represented in CPDO planning processes; MPA governance includes fishers</td><td>Fishers not at table when port expansion decided; no formal representation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.2 -->
+      <div class="subsection" id="k1-2">
+        <h3>K1.2 — Root Cause Tree</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Layer</th><th>Pre-filled Answer (K1)</th></tr></thead>
+            <tbody>
+              <tr><td>TRUNK</td><td>Despite Fisheries LQ of 3.84 (highly specialised), most catch value leaves Isabela within hours of landing. Fishers remain poor while the resource is abundant.</td></tr>
+              <tr><td>Branch 1 (Effect)</td><td>Fishers earn ₱150–300/day despite catching fish worth ₱2,000+ at Zamboanga wholesale — a 5–10× value capture gap.</td></tr>
+              <tr><td>Branch 2 (Effect)</td><td>Youth out-migration — young Sama and Tausug leave because 'fishing doesn't pay'. Marine knowledge is being lost with each generation.</td></tr>
+              <tr><td>Branch 3 (Effect)</td><td>Ecological pressure — fishers increase volume to compensate for low price, depleting nearshore stocks. No MPA or fishing calendar exists.</td></tr>
+              <tr><td>Root 1 (Cause)</td><td>No cold chain — without ice or cold storage, fishers must sell within hours to whoever is at the port. This creates a monopsony market with only 3–4 buyers.</td></tr>
+              <tr><td>Root 2 (Cause)</td><td>Trader advance financing (utang system) — fishers receive fuel and gear money in advance from a specific buyer, then are pre-committed to sell exclusively to that buyer regardless of price.</td></tr>
+              <tr><td>Root 3 (Cause)</td><td>No Halal-certified processing facility — despite Isabela being a majority-Muslim city, it cannot access the Sabah and BIMP-EAGA Halal export premium markets.</td></tr>
+              <tr><td>Root 4 (Cause)</td><td>No community-based fisheries management plan or formalised MPA. No formal marine stewardship structure for Kawman 1 coastal waters.</td></tr>
+              <tr><td>Root 5 (Cause)</td><td>Sama Dilaut have no CADT and no formal land/sea tenure. Port reclamation projects proceed without IP FPIC consultation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.3 -->
+      <div class="subsection" id="k1-3">
+        <h3>K1.3 — Iceberg Model</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Level</th><th>Pre-filled Answer (K1 — fisheries value leakage)</th></tr></thead>
+            <tbody>
+              <tr><td>EVENT</td><td>In January 2026, sardine farmgate price dropped 40% overnight when two Zamboanga-based buyers temporarily withdrew from the Port of Isabela landing site.</td></tr>
+              <tr><td>PATTERN</td><td>This is the third such price collapse in five years. Each follows the same sequence: buyer withdrawal → panic selling → price floor disappears → recovery takes 2–3 months. Each collapse is more severe than the last.</td></tr>
+              <tr><td>STRUCTURE</td><td>Monopsony market structure — 3–4 major buyers control the port landing site. Trader advance financing (utang) locks fishers into exclusive selling relationships. No cold chain means fishers cannot hold stock to wait for better prices. No cooperative aggregation or auction system. No formal MPA so no fishing calendar to manage seasonal supply.</td></tr>
+              <tr><td>MENTAL MODEL</td><td>'Kailangan dumaan sa Zamboanga — walang ibang paraan.' The belief that Isabela can only be a transit point, not a processing hub, is held by fishers AND by LGU planners. This shapes every investment decision.</td></tr>
+              <tr><td>LEVERAGE</td><td>The mental model is the highest leverage point. Once fishers and LGU planners shift from 'transit point' to 'processing hub' framing, investments in cold chain and cooperative buying make sense.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.4 -->
+      <div class="subsection" id="k1-4">
+        <h3>K1.4 — Causal Loop Diagram</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Loop</th><th>Description (K1)</th></tr></thead>
+            <tbody>
+              <tr><td>R− The Utang Trap</td><td>Low catch price → fisher borrows from trader for fuel/gear → fisher must sell exclusively to trader → trader sets price → low catch price. This is a vicious reinforcing loop. Each cycle deepens debt and dependency.</td></tr>
+              <tr><td>R− Ecological Depletion</td><td>Low income → fish more to compensate → nearshore stock depletes → fish harder to catch → lower income. Compounds with the utang trap.</td></tr>
+              <tr><td>B Constraint</td><td>BFAR vessel monitoring + PCG presence creates some limit on overfishing, but enforcement is inconsistent and underfunded.</td></tr>
+              <tr><td>R+ Virtuous Cycle Potential</td><td>Cooperative fuel fund → fishers not obligated to single buyer → price competition between buyers → higher farmgate price → fishers invest in better gear → higher quality catch → higher price. Cold chain enables fishers to hold stock for 24 hours, breaking the 'must sell now' constraint.</td></tr>
+              <tr><td>Data Link</td><td>Marine output gap: 3,200 MT inflow / 2,100 MT outflow. The 1,100 MT difference is value extracted by the trader network before it leaves Isabela. If 50% of that could be locally processed, it represents a significant GVA gain.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.5 -->
+      <div class="subsection" id="k1-5">
+        <h3>K1.5 — IAD Framework</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>IAD Element</th><th>Pre-filled Answer (K1 — fisheries commons)</th></tr></thead>
+            <tbody>
+              <tr><td>Biophysical Conditions</td><td>Nearshore marine waters of Isabela Bay and Basilan Strait. Mangrove forest (19 species including endangered/near-threatened). Coral reef (degraded). Seagrass beds. Fisheries LQ 3.84. ~3,200 MT marine output. Malamawi Island mariculture potential. Climate risk: Kawman 1 at ~4.6m elevation — high sea-level rise vulnerability.</td></tr>
+              <tr><td>Attributes of Community</td><td>Sama Dilaut (Badjao), Tausug, Bajau: multi-ethnic coastal community. Strong kinship networks. High mutual dependence on marine resources. Low formal education. Trust in traditional leaders but distrust of external regulators. High inequality between fishers and traders. MMWA a functioning cooperative with ecotourism capability.</td></tr>
+              <tr><td>Rules-in-use</td><td><strong>FORMAL:</strong> RA 8550 (Fisheries Code); BFAR regulations; PPA port rules; RA 8371 (IPRA); LGU fisheries ordinance. <strong>CUSTOMARY:</strong> Sama sea-territory norms; utang system as de facto access rule; Tausug elder arbitration. <strong>GAP:</strong> no community-based MPA; no FPIC protocol for port expansion; no Sama Dilaut tenure instrument.</td></tr>
+              <tr><td>Action Situations</td><td>Daily: where to fish, to whom to sell, whether to invest in gear. Seasonal: whether to shift to seaweed cultivation during monsoon. Strategic: whether to join cooperative or remain in utang system. Crisis: when buyer withdraws, who do you call? Currently: no collective response mechanism.</td></tr>
+              <tr><td>Outcomes (Current)</td><td>High extraction, low value capture. Ecological degradation. Youth out-migration. Sama Dilaut tenure insecurity. No income diversification.</td></tr>
+              <tr><td>Outcomes (Desired)</td><td>Managed fishery with MPA. Cold chain and Halal processing cooperative. Ecotourism diversification (MMWA model). Sama Dilaut sea tenure recognised. Youth returning with marine stewardship skills.</td></tr>
+              <tr><td>Evaluative Criteria</td><td>Equity (who benefits?); Sustainability (is the fishery regenerating?); Efficiency (is value captured locally?); Legitimacy (do fishers trust the governance?); Cultural fit (does it respect Sama/Tausug sea-territory norms and adat?); Accountability.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.6 -->
+      <div class="subsection" id="k1-6">
+        <h3>K1.6 — KII Questions and Expected Directions</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>KII Respondent</th><th>Key Questions</th><th>Expected Direction (ECSOM-grounded)</th></tr></thead>
+            <tbody>
+              <tr><td>Government: BFAR / City Agriculture</td><td>What is the biggest challenge for fisheries in Kawman 1?</td><td>Post-harvest loss (no cold chain); illegal fishing by outsiders; declining nearshore stocks; limited BFAR budget for Basilan-specific interventions.</td></tr>
+              <tr><td>Government: CPDO</td><td>How is Sama Dilaut tenure addressed in the CLUP?</td><td>Likely: not addressed or classified as 'informal settlement'. This is a gap to surface.</td></tr>
+              <tr><td>Business: Basilan Chamber</td><td>Is there a business case for local fish processing?</td><td>Expected: mixed — some members see it, others say 'volume too low without cold chain'. The cold chain is the prerequisite investment.</td></tr>
+              <tr><td>Civil Society/IP: Sama elder or MMWA leader</td><td>What would make fishing more sustainable and profitable for your community?</td><td>Ice / cold storage; cooperative fuel supply; fair price from multiple buyers; MPA to protect breeding grounds; recognition of sea territory.</td></tr>
+              <tr><td>Academe: BFAR researcher / BaSC</td><td>What research exists on Isabela's marine resources? What is missing?</td><td>Some BFAR data on fish landings. Limited coral/seagrass monitoring. No study on traditional Sama fishing grounds. VSU shellfish research potential (CMGAC notes).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.7 -->
+      <div class="subsection" id="k1-7">
+        <h3>K1.7 — FGD Themes by Cohort</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Cohort</th><th>Expected Key Themes (K1)</th></tr></thead>
+            <tbody>
+              <tr><td>C4 Adult Women</td><td>Dependence on fish as primary protein; high food cost when price spikes; women in fish processing/vending; desire for reliable water supply on stilt platforms; safety concerns (no lighting).</td></tr>
+              <tr><td>C5 Adult Men</td><td>Utang system frustration — aware of the trap but see no alternative; awareness that fish worth more in Zamboanga; desire for ice/storage; concern about declining catch near reef areas.</td></tr>
+              <tr><td>C6 IP Leaders (Sama / Tausug)</td><td>Sea territory boundaries; ancestral use rights versus LGU CLUP; CADT process awareness (or lack thereof); desire for formal recognition; MMWA ecotourism as positive model.</td></tr>
+              <tr><td>C7 Enterprise Operators</td><td>Price volatility; utang system mechanics; lack of market information; desire for price board at port; cooperative vs. individual selling trade-offs.</td></tr>
+              <tr><td>C2 Young Women 15–24</td><td>Out-migration pull of Zamboanga jobs; desire to stay if income was better; pride in Sama marine identity but uncertainty about future; interest in ecotourism as livelihood option.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K1.8 -->
+      <div class="subsection" id="k1-8">
+        <h3>K1.8 — Governance Mapping (Power-Interest)</h3>
+        <div class="table-wrap">
+          <table class="k1">
+            <thead><tr><th>Actor</th><th>Power</th><th>Interest</th><th>Quadrant</th><th>Engagement Note</th></tr></thead>
+            <tbody>
+              <tr><td>City Agriculture / BFAR</td><td>Med-High</td><td>High</td><td>Manage closely</td><td>Key ally — provide data and extension. Underfunded; needs LAB.PH to bring resources.</td></tr>
+              <tr><td>PPA Port Authority</td><td>High</td><td>Low</td><td>Keep informed</td><td>Decisions on port expansion affect Sama fishing grounds. Must not be surprised.</td></tr>
+              <tr><td>Zamboanga buyers (3–4 traders)</td><td>High</td><td>Med (protective)</td><td>Keep informed</td><td>Will resist cold chain or cooperative (threatens their monopsony). Do not antagonise prematurely.</td></tr>
+              <tr><td>MMWA (Marang-Marang Women's Assoc.)</td><td>Low-Med</td><td>High</td><td>Keep satisfied → build to manage closely</td><td>Key civil society partner. Their ecotourism model is replicable.</td></tr>
+              <tr><td>Sama Dilaut community (no CADT)</td><td>Low (formal)</td><td>High</td><td>Keep satisfied</td><td>Critical gap: lowest formal power, highest interest. Priority for voice amplification via Photovoice.</td></tr>
+              <tr><td>BARMM-MAFAR</td><td>Med (policy)</td><td>Med</td><td>Keep informed</td><td>FPIC and CADT decisions route through BARMM. Must be engaged early.</td></tr>
+              <tr><td>NCIP Region IX (Zamboanga)</td><td>High (CADT)</td><td>Low (distant)</td><td>Keep informed</td><td>Sama Dilaut tenure depends on NCIP action. Hard to engage but decisive.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KAWMAN 2 ══════════ -->
+    <section class="section" id="k2">
+      <div class="section-header">
+        <div class="section-num" style="background:var(--navy-mid)">2</div>
+        <div class="section-title-block">
+          <div class="kawman-tag" style="background:#EEF2FA;border-color:var(--navy-mid);color:var(--navy-mid)">Kawman 2 — CBD</div>
+          <h2>Finance, Administration, Trade &amp; Services Hub</h2>
+        </div>
+      </div>
+
+      <div class="validation-q">
+        <strong>Key Validation Question</strong>
+        Who benefits from the 1.47 services multiplier — formal sector only, or also informal vendors and cooperatives? The answer reveals how inclusive (or exclusive) the city's economic growth actually is.
+      </div>
+
+      <!-- K2.1 -->
+      <div class="subsection" id="k2-1">
+        <h3>K2.1 — Photovoice Prosperity Mapping</h3>
+        <h4>SHOWed — Sample Caption: "Cooperative building with queue of members"</h4>
+        <div class="table-wrap">
+          <table class="k2">
+            <thead><tr><th>SHOWed</th><th>Sample Caption</th><th>✓/✗</th></tr></thead>
+            <tbody>
+              <tr><td>S — See</td><td>Two-storey cooperative building in Isabela Proper. A queue of people — mostly women — waiting to transact. Signage in Chavacano, Tagalog, and English. A security guard at the door.</td><td></td></tr>
+              <tr><td>H — Happening</td><td>Members accessing micro-loans and savings services. The cooperative is one of few financial institutions serving the informal sector without requiring formal employment documentation.</td><td></td></tr>
+              <tr><td>O — Our lives</td><td>The Trade &amp; Services multiplier of 1.47 runs through institutions like this. When the cooperative lends ₱100, it generates ₱147 in total economic activity. But the queue shows demand vastly exceeds what the cooperative can serve.</td><td></td></tr>
+              <tr><td>W — Why</td><td>Commercial banks require collateral most residents cannot provide. The cooperative fills the gap — but is undercapitalised. Islamic finance options are growing but still limited and not well-publicised.</td><td></td></tr>
+              <tr><td>ed — Do</td><td>Support cooperative capitalisation through BARMM's Special Development Fund. Develop an Islamic finance product (via MLAP or OFI) specifically for micro-enterprises. Include cooperative members in Pentahelix Action Workshop (07B).</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K2.2 -->
+      <div class="subsection" id="k2-2">
+        <h3>K2.2 — Root Cause Tree / Iceberg</h3>
+        <div class="table-wrap">
+          <table class="k2">
+            <thead><tr><th>Layer</th><th>Pre-filled Answer (K2 — financial exclusion)</th></tr></thead>
+            <tbody>
+              <tr><td>TRUNK</td><td>Despite the services sector dominating the city's GDP at 44.7% and a Trade &amp; Services multiplier of 1.47, financial services do not reach the informal sector — which is most of the workforce.</td></tr>
+              <tr><td>Branches (Effects)</td><td>Informal sector excluded from credit and insurance. Women's enterprises disproportionately excluded. Multiplier benefits formal businesses but not poorest households. Cooperative unable to meet demand.</td></tr>
+              <tr><td>Roots (Causes)</td><td>Commercial banks require collateral unavailable to informal workers. Cooperative undercapitalised (demand &gt; capital). Islamic finance products (MLAP) exist but are not widely accessible or promoted. LGU data systems cannot measure or track the informal sector.</td></tr>
+              <tr><td>MENTAL MODEL</td><td>'The informal sector is not our mandate.' The LGU sees cooperatives as private-sector matters, not public infrastructure. Until cooperatives are treated as public financial infrastructure (like roads or water), they will remain underfunded and underpowered.</td></tr>
+              <tr><td>STRUCTURE</td><td>No dedicated BARMM fund for cooperative capitalisation targeted at Isabela. No LGU cooperative development officer. No Islamic microfinance bureau in the city. Banks' community reinvestment obligations not enforced locally.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K2.3 -->
+      <div class="subsection" id="k2-3">
+        <h3>K2.3 — KII &amp; FGD Key Themes</h3>
+        <div class="table-wrap">
+          <table class="k2">
+            <thead><tr><th>Respondent / Cohort</th><th>Expected Direction</th></tr></thead>
+            <tbody>
+              <tr><td>KII: Mayor's Office / CPDO</td><td>Proud of services sector growth and cooperative network. May not be aware of the capital gap depth. Open to BARMM SDF proposal if framed as economic efficiency (multiplier return on investment).</td></tr>
+              <tr><td>KII: Basilan Chamber of Commerce</td><td>Aware of Islamic finance gap. See BIMP-EAGA trade corridor as opportunity. May resist cooperative scale-up if they perceive it as competition.</td></tr>
+              <tr><td>KII: Cooperative officer / BSP representative</td><td>Can quantify the demand-capital gap directly. Will have data on loan rejection rates and unfulfilled demand. Key ally for policy brief.</td></tr>
+              <tr><td>FGD C4 Adult Women (CBD)</td><td>Livelihood via sari-sari store or home-based food processing. Credit access is essential but often insufficient. Women aware of cooperative queue problem. Strong aspiration for children's education at BaSC.</td></tr>
+              <tr><td>FGD C8 Elders</td><td>Memory of when the CBD had more locally-owned small businesses. Perception that large chains are 'taking over'. May express tension between Halal commerce norms and non-Muslim business practices.</td></tr>
+              <tr><td>FGD C1 Children 8–14</td><td>School quality; transportation to school; desire for parks and public spaces; awareness of tindahan (sari-sari) as family business; simple understanding of 'when there's no money'.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K2.4 -->
+      <div class="subsection" id="k2-4">
+        <h3>K2.4 — Governance &amp; IAD</h3>
+        <div class="table-wrap">
+          <table class="k2">
+            <thead><tr><th>IAD Element</th><th>K2 Pre-fill</th></tr></thead>
+            <tbody>
+              <tr><td>Biophysical</td><td>Dense urban built environment. Port interface at its western edge. River system (flood risk). Limited open space. High commercial footprint. 100% diesel electricity grid — every power outage hits CBD commerce immediately.</td></tr>
+              <tr><td>Community Attributes</td><td>Multi-ethnic (Tausug, Yakan, Chavacano, Chinese-Filipino, Sama). Formal and informal employment. High transient population (port workers, traders). Strong mosque network. Cooperative membership ~15,000 (estimated). Active Basilan Chamber.</td></tr>
+              <tr><td>Rules-in-use</td><td><strong>FORMAL:</strong> LGU business permits; BSP banking regulations; DTI cooperative regulations; national zoning. <strong>CUSTOMARY:</strong> informal credit networks (5-6 lending, paluwagan); barangay-level conflict resolution; mosque governance for Friday trade schedules. <strong>GAP:</strong> no local Islamic finance regulatory window; no informal sector protection ordinance.</td></tr>
+              <tr><td>Action Situations</td><td>Daily: does the cooperative have funds today? Weekly: paluwagan rotation. Seasonal: Ramadan trade surge; school opening consumer demand. Strategic: should the cooperative expand? Should they partner with an Islamic bank?</td></tr>
+              <tr><td>Governance Gaps</td><td>No inter-department data sharing between CPDO, Business Permits, and cooperative office. No mechanism to track informal sector contribution to the local economy. LGU planning uses PSA formal sector data only.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KAWMAN 3 ══════════ -->
+    <section class="section" id="k3">
+      <div class="section-header">
+        <div class="section-num" style="background:#5A3080">3</div>
+        <div class="section-title-block">
+          <div class="kawman-tag" style="background:#F4EEF8;border-color:#5A3080;color:#5A3080">Kawman 3 — East</div>
+          <h2>Urban Expansion, Construction Demand, Residential Workforce Zone</h2>
+        </div>
+      </div>
+
+      <div class="validation-q">
+        <strong>Key Validation Question</strong>
+        When the community talks about 'development', do they mean infrastructure serving them, or infrastructure changing who can afford to live here? The tension between 'growth' and 'displacement' is the K3 mental model to surface.
+      </div>
+
+      <!-- K3.1 -->
+      <div class="subsection" id="k3-1">
+        <h3>K3.1 — Photovoice &amp; Root Cause</h3>
+        <h4>SHOWed — Sample Caption: "Water truck parked outside a new housing block"</h4>
+        <div class="table-wrap">
+          <table class="k3">
+            <thead><tr><th>SHOWed</th><th>Sample Caption</th><th>✓/✗</th></tr></thead>
+            <tbody>
+              <tr><td>S — See</td><td>A water delivery truck beside a newly built residential subdivision. Residents queue with containers. Children helping carry water inside. No piped water connection to the building visible.</td><td></td></tr>
+              <tr><td>H — Happening</td><td>Despite this being a formally approved subdivision, there is no piped water supply. Residents pay ₱50–80 per 20-litre container from a water truck. A family of 5 may spend ₱300–400/week on water alone.</td><td></td></tr>
+              <tr><td>O — Our lives</td><td>This is what 'development' looks like for families who moved to Kawman 3 for affordable housing. The house is there. The water is not. Power outages 4–6 hours daily. This is not prosperity — it is a different kind of poverty.</td><td></td></tr>
+              <tr><td>W — Why</td><td>The CPDO approves new subdivisions without mandatory utility capacity certification. BASELCO's grid is 100% diesel with no expansion budget. The water system was designed for 2010 population levels. There is no solar RE facility yet operational.</td><td></td></tr>
+              <tr><td>ed — Do</td><td>Require utility capacity certification as a precondition for subdivision approval (CPDO ordinance). Fast-track the solar RE facility for Kawman 3/4. Advocate for a water system expansion budget in the next LGU investment programme (BDIP).</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Iceberg Analysis (K3)</h4>
+        <div class="table-wrap">
+          <table class="k3">
+            <thead><tr><th>Layer</th><th>Pre-filled Answer (K3)</th></tr></thead>
+            <tbody>
+              <tr><td>TRUNK</td><td>Urbanisation in Kawman 3 is outpacing utility and service infrastructure — creating a new form of poverty in formally 'developed' areas.</td></tr>
+              <tr><td>Events</td><td>Sunrise brgy: 12-hr water outages during March 2026 peak demand. Brownouts 4–6 hrs/day. New SMEs shutting down or moving.</td></tr>
+              <tr><td>Pattern</td><td>Infrastructure complaints increase each dry season. New subdivisions approved annually but no new utility capacity. CPDO approvals are not cross-checked with BASELCO or water district data.</td></tr>
+              <tr><td>Structure</td><td>BASELCO 100% diesel — no baseload expansion. Water system: 2010 design capacity. CPDO: no mandatory utility certification. CLUP aspirational but no utility backbone budget.</td></tr>
+              <tr><td>Mental Model</td><td>'Ang development ay pagpapatayo ng bahay.' (Development means building houses.) The CPDO's performance is measured in approved permits — not in utility coverage. Construction IS the goal, not the means.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K3.2 -->
+      <div class="subsection" id="k3-2">
+        <h3>K3.2 — KII &amp; FGD Key Themes</h3>
+        <div class="table-wrap">
+          <table class="k3">
+            <thead><tr><th>Respondent / Cohort</th><th>Expected Direction</th></tr></thead>
+            <tbody>
+              <tr><td>KII: CPDO</td><td>May frame utility gaps as 'BASELCO's problem, not CPDO's'. Useful to probe: 'What happens to a subdivision approval if BASELCO says the grid can't support it?' If the answer is 'we approve anyway', that is the structural gap.</td></tr>
+              <tr><td>KII: BASELCO / Water District</td><td>Can confirm grid capacity data. Likely to express frustration at being blamed for an underfunded situation. They are a symptom, not the cause. Key ally for the solar RE proposal.</td></tr>
+              <tr><td>FGD C4 Adult Women</td><td>Most likely to speak about daily utility management — fetching water, managing brownouts, adjusting cooking schedules. Their coping strategies are invisible in CPDO data but visible in Photovoice.</td></tr>
+              <tr><td>FGD C3 Young Women 15–24</td><td>Balancing cost of living in Kawman 3 vs. economic opportunity in Kawman 2. Job access from residential zone. Transportation cost. Safety on commute to CBD.</td></tr>
+              <tr><td>FGD C5 Adult Men</td><td>SME operators: brownout cost (lost refrigeration, halted production, generator fuel). Awareness of solar alternatives but no access. BRICKS programme awareness?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K3.3 -->
+      <div class="subsection" id="k3-3">
+        <h3>K3.3 — Governance &amp; IAD</h3>
+        <div class="table-wrap">
+          <table class="k3">
+            <thead><tr><th>IAD Element</th><th>K3 Pre-fill</th></tr></thead>
+            <tbody>
+              <tr><td>Biophysical</td><td>Flat coastal fringes transitioning to rolling terrain. River corridors (flood risk). Urbanising former agricultural land. No designated green space in new subdivisions. High construction materials demand — ~7,000 MT pure inflow.</td></tr>
+              <tr><td>Community</td><td>Diverse — mix of long-term rural families and new urban migrants from within Basilan. Rapid population growth. Multiple ethnolinguistic groups. High renters vs. owners ratio in new subdivisions.</td></tr>
+              <tr><td>Rules-in-use</td><td><strong>FORMAL:</strong> LGU subdivision approval; HLURB/DHSUD standards (formally required but locally unenforced); CPDO zoning. <strong>CUSTOMARY:</strong> informal land subdivisions pre-dating formal system; barangay-level informal rental agreements. <strong>GAP:</strong> no utility capacity ordinance; no green space percentage requirement.</td></tr>
+              <tr><td>Key Governance Gap</td><td>No inter-agency coordination mechanism between CPDO, BASELCO, Water District, and BDIP investment planning. Each agency plans in silos. The solar RE investment must be cross-departmental.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KAWMAN 4 ══════════ -->
+    <section class="section" id="k4">
+      <div class="section-header">
+        <div class="section-num" style="background:#7A4000">4</div>
+        <div class="section-title-block">
+          <div class="kawman-tag" style="background:#FDF3E7;border-color:#C97A00;color:#7A4000">Kawman 4 — West</div>
+          <h2>Industrial Core — Rubber &amp; Coconut Manufacturing, BRICKS Circular Economy Zone</h2>
+        </div>
+      </div>
+
+      <div class="validation-q">
+        <strong>Key Validation Question</strong>
+        Does the community in Kawman 4 (workers, enterprise operators) know what the rubber multiplier of 1.76 means in practice — that each ₱1M processed locally generates ₱1.76M in economic activity? If not, the multiplier narrative has not reached ground level. Test this.
+      </div>
+
+      <!-- K4.1 -->
+      <div class="subsection" id="k4-1">
+        <h3>K4.1 — Photovoice &amp; Root Cause</h3>
+        <h4>SHOWed — Sample Caption: "Rubber collection point. Bags loaded onto truck, heading toward port."</h4>
+        <div class="table-wrap">
+          <table class="k4">
+            <thead><tr><th>SHOWed</th><th>Sample Caption</th><th>✓/✗</th></tr></thead>
+            <tbody>
+              <tr><td>S — See</td><td>Large white bags of cuplump rubber stacked at a roadside collection point in Menzi. A Zamboanga-registered truck being loaded. Farmers standing to the side, watching.</td><td></td></tr>
+              <tr><td>H — Happening</td><td>Raw rubber leaving Isabela as a commodity. The value-added step — converting cuplump to crumb rubber or concentrated latex — will happen in Zamboanga or Davao. The jobs, the income, the multiplier: all leave on this truck.</td><td></td></tr>
+              <tr><td>O — Our lives</td><td>The multiplier of 1.76 means that ₱1M in processed rubber generates ₱1.76M in local economic activity — jobs, services, food purchases, school fees. That multiplier is currently happening in Zamboanga, not here.</td><td></td></tr>
+              <tr><td>W — Why</td><td>Processing requires reliable electricity. BASELCO's diesel grid makes processing costs unviable. There is no crumb rubber plant. The Kapayawan-to-port corridor adds 11–15% transport cost. Dual regulatory friction (Region IX + BARMM) discourages investors.</td><td></td></tr>
+              <tr><td>ed — Do</td><td>Solar RE facility in Maligue/Cabunbata area makes processing viable. BARMM-MAFAR and DTI joint incentive package for a crumb rubber anchor tenant. BRICKS eco-hub converts processing waste to construction materials. Farm-to-market road upgrade along Kapayawan corridor.</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Causal Loop Diagram (K4)</h4>
+        <div class="table-wrap">
+          <table class="k4">
+            <thead><tr><th>CLD Loop</th><th>K4 Description</th></tr></thead>
+            <tbody>
+              <tr><td>R+ Virtuous Cycle (if solar RE unlocked)</td><td>Solar RE investment → lower energy cost → rubber/coconut processing viable → crumb rubber plant opens → jobs in Kawman 4 → wages spent in Kawman 2/3 (multiplier activates) → tax revenue → further infrastructure investment. Each ₱1M processed = ₱1.76M output, ₱760K additional economic activity.</td></tr>
+              <tr><td>R− Current Vicious Cycle</td><td>High diesel cost → processing unviable → raw export continues → industrial zone underemployed → investment doesn't come → BASELCO has no revenue to modernise grid → high diesel cost.</td></tr>
+              <tr><td>B Constraint</td><td>BASELCO franchise area; dual jurisdiction (Region IX/BARMM); land assembly for Maligue solar farm requires IP and LGU consultation; global rubber price volatility.</td></tr>
+              <tr><td>Intervention Priority</td><td>Solar RE breaks both loops simultaneously — it makes processing viable AND gives BASELCO revenue to expand capacity. This is the single highest-impact infrastructure intervention in the city.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K4.2 -->
+      <div class="subsection" id="k4-2">
+        <h3>K4.2 — IAD Framework</h3>
+        <div class="table-wrap">
+          <table class="k4">
+            <thead><tr><th>IAD Element</th><th>K4 Pre-fill</th></tr></thead>
+            <tbody>
+              <tr><td>Biophysical</td><td>Flat coastal plains and western fringes suitable for warehouses and processing plants. BRICKS programme testing eco-hubs (rubber waste → construction materials). Maligue designated for solar-powered processing. Kabunbata logistics node connecting upland to port. 100% diesel grid is the binding biophysical constraint.</td></tr>
+              <tr><td>Community</td><td>Mix of agricultural smallholders (rubber/coconut farmers), industrial workers, urban-rural fringe residents. Barangay Menzi has historical rubber processing heritage. San Rafael growing commercial-residential. High awareness of Zamboanga as alternative livelihood destination.</td></tr>
+              <tr><td>Rules-in-use</td><td><strong>FORMAL:</strong> LGU industrial zone classification; DTI investment registration; BASELCO franchise; Region IX-BARMM boundary agreement. <strong>CUSTOMARY:</strong> Farm gate price negotiations via trader network; informal weighing systems; credit-in-kind from input traders. <strong>GAP:</strong> no environmental compliance certification requirement for small processors; no single-stop-shop permit for industrial zone.</td></tr>
+              <tr><td>Action Situations</td><td>Daily: farmers decide whether to sell fresh cuplump or hold. Weekly: price negotiation with trader. Seasonal: harvest cycle; typhoon-proofing stored rubber. Strategic: whether to invest in small processing equipment vs. remain a raw supplier. Investment decision: solar vs. diesel for operations.</td></tr>
+              <tr><td>Outcomes (Desired)</td><td>Crumb rubber plant operational in Kawman 4. Solar RE reducing processing costs. BRICKS eco-hub converting waste to construction materials. Farm-to-market road upgraded. Local employment rising. Multiplier 1.76 activating within Isabela, not Zamboanga.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K4.3 -->
+      <div class="subsection" id="k4-3">
+        <h3>K4.3 — KII &amp; FGD Key Themes</h3>
+        <div class="table-wrap">
+          <table class="k4">
+            <thead><tr><th>Respondent / Cohort</th><th>Expected Direction</th></tr></thead>
+            <tbody>
+              <tr><td>KII: Business (rubber processor / Basilan Chamber)</td><td>Aware of the processing gap. Will cite energy cost as the blocking factor. Open to solar RE if feasibility study is credible. May know of prior failed processing plant attempts — ask why they failed.</td></tr>
+              <tr><td>KII: DTI / BARMM-MinDA</td><td>Will reference BIMP-EAGA Green Industrial Hub concept. May have data on investor inquiries. The dual-jurisdiction question is the key institutional bottleneck — probe this.</td></tr>
+              <tr><td>KII: CAgO (rubber/coconut extension)</td><td>Can give production data by barangay. Will know farmer attitudes toward collective processing vs. individual sale. Ask: 'Has anyone tried to start a processing cooperative here before?'</td></tr>
+              <tr><td>FGD C7 Enterprise Operators</td><td>Frustration with raw export model is likely but may be expressed as resignation: 'That's just how it is.' Push gently toward W (Why does this exist?) — that is where the structural insight lives.</td></tr>
+              <tr><td>FGD C5 Adult Men</td><td>Awareness of BRICKS programme? Experience with brownouts vs. generator costs? Willingness to participate in a cooperative processing model? Migration pull of Zamboanga industrial jobs?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KAWMAN 5 ══════════ -->
+    <section class="section" id="k5">
+      <div class="section-header">
+        <div class="section-num" style="background:#1A5C28">5</div>
+        <div class="section-title-block">
+          <div class="kawman-tag" style="background:#EBF5EC;border-color:#1A5C28;color:#1A5C28">Kawman 5 — Upland</div>
+          <h2>Resource Base — Yakan IP Community, Subsistence Agriculture, 2 Pending CADTs</h2>
+        </div>
+      </div>
+
+      <div class="validation-q">
+        <strong>Key Validation Question</strong>
+        Does the Yakan council of elders distinguish between their land (which they manage under adat) and the government's land classification (which may not recognise their rights)? This distinction is the foundation of everything else in Kawman 5.
+      </div>
+
+      <!-- K5.1 -->
+      <div class="subsection" id="k5-1">
+        <h3>K5.1 — Photovoice Prosperity Mapping</h3>
+        <h4>SHOWed — Sample Caption: "Yakan woman weaving on backstrap loom under coconut tree"</h4>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>SHOWed</th><th>Sample Caption</th><th>✓/✗</th></tr></thead>
+            <tbody>
+              <tr><td>S — See</td><td>Middle-aged Yakan woman, sitting on woven mat, working a backstrap loom. Traditional tengkapung (headcloth) motif visible. Behind her: coconut palms, nipa house, a child watching quietly. Morning light.</td><td></td></tr>
+              <tr><td>H — Happening</td><td>She weaves approximately 2 hours per session, twice a week. One piece takes 4 months to complete. This is not spare time — it is deliberate cultural production, alongside farm work, food preparation, and childcare.</td><td></td></tr>
+              <tr><td>O — Our lives</td><td>Yakan weaving is UNESCO-recognised intangible heritage. But the weavers earn less than minimum wage per piece. Abaca fibre must be purchased. Finished textiles are often sold to middlemen in Zamboanga at prices the weaver cannot negotiate.</td><td></td></tr>
+              <tr><td>W — Why</td><td>No cooperative bargaining structure for weavers. The tennun economy is invisible in LGU economic planning — it does not appear in PSA accounts because it is classified as household production, not commercial output. No direct-to-market channel from Isabela.</td><td></td></tr>
+              <tr><td>ed — Do</td><td>Include weaving output in CEESAM as a cultural production sector. Propose a Tennun cooperative linked to the Basilan Chamber's Tennun Expo platform. Advocate for Halal-certified cultural enterprise branding. Develop direct-to-market channel bypassing Zamboanga middlemen.</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>K5 Prosperity Model</h4>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>Domain</th><th>K5 Aspiration</th><th>K5 Current Reality</th></tr></thead>
+            <tbody>
+              <tr><td>Belonging &amp; Culture</td><td>CADT issued; Yakan adat formally recognised alongside LGU governance; weaving as dignified livelihood</td><td>No CADT (2 pending for 3 ICCs); adat de facto but not de jure; weaving earnings below poverty line</td></tr>
+              <tr><td>Foundations</td><td>Reliable food (vegetables grown locally + rice + protein); road access; potable water; schools within walking distance</td><td>95% vegetable imports; children walk 2+ hours to school; limited potable water; no all-weather road in Kapayawan</td></tr>
+              <tr><td>Health</td><td>Health post in upland area; maternal health care accessible; mental health as community wellbeing</td><td>Nearest health centre is lowland; maternal deaths still documented in upland areas; limited PhilHealth access</td></tr>
+              <tr><td>Opportunities</td><td>Young Yakan trained in agroforestry, weaving enterprise, and organic farming; BaSC extension available upland</td><td>Youth out-migrate for employment; BaSC extension reach is limited; no vocational training upland</td></tr>
+              <tr><td>Power &amp; Voice</td><td>Yakan council in CPDO planning tables; CADT means LGU consults before any land use decision</td><td>No formal seat in CPDO; land use decisions proceed without FPIC; Yakan elders consulted informally but not structurally</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K5.2 -->
+      <div class="subsection" id="k5-2">
+        <h3>K5.2 — Root Cause Tree &amp; CLD</h3>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>Layer</th><th>Pre-filled Answer (K5 — vegetable import dependency)</th></tr></thead>
+            <tbody>
+              <tr><td>TRUNK</td><td>95% of vegetables consumed in Isabela are imported from Zamboanga and mainland Mindanao. Local production is negligible despite ~7,000 MT inflow and massive unmet demand.</td></tr>
+              <tr><td>Branch 1</td><td>Price spikes during Amihan (NE monsoon) season when supply from Zamboanga drops — poorest households feel it most acutely.</td></tr>
+              <tr><td>Branch 2</td><td>Nutrition gap — fresh vegetable access is income-dependent; upland Yakan families eat the least dietary variety.</td></tr>
+              <tr><td>Branch 3</td><td>Wealth leaves the community every market day — ₱5,500 MT vegetable inflow vs. &lt;500 MT local outflow represents a substantial daily cash drain from Isabela.</td></tr>
+              <tr><td>Root 1 (Cause)</td><td>No irrigation infrastructure — upland farms depend entirely on rain. Kapatagan Grande, the most suitable land for vegetable cultivation, has no functional irrigation system.</td></tr>
+              <tr><td>Root 2 (Cause)</td><td>Land tenure insecurity — Yakan farmers without CADT or CLOA titles cannot access formal agricultural credit and avoid investing in permanent crop infrastructure.</td></tr>
+              <tr><td>Root 3 (Cause)</td><td>Knowledge gap — lowland vegetable cultivation (tomato, eggplant, pechay, sitaw) is not part of traditional Yakan swidden practice. Training and demo plots are absent.</td></tr>
+              <tr><td>Root 4 (Cause)</td><td>No aggregation hub or farm-to-market road at Kapayawan — even when farmers produce surplus, there is no reliable transport system to the CBD market.</td></tr>
+              <tr><td>CLD R− Loop</td><td>Low local production → high import dependency → money leaves community → low agricultural investment → low local production. Capturing 20% of the import market = +₱115M/yr local agricultural GVA.</td></tr>
+              <tr><td>Breaking the Loop</td><td>SCoPSA (intercropping vegetables under coconut canopy in Kapatagan Grande) + irrigation (BARMM-MAFAR) + aggregation hub at Sumagdang Farm School + CADT fast-track (unlocks credit access and investment willingness).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K5.3 -->
+      <div class="subsection" id="k5-3">
+        <h3>K5.3 — IAD Framework (Yakan Upland Agricultural Commons)</h3>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>IAD Element</th><th>K5 Pre-fill</th></tr></thead>
+            <tbody>
+              <tr><td>Biophysical</td><td>Mountainous terrain; tropical volcanic soil; high rainfall; coconut-dominant canopy with swidden plots beneath. Watershed areas feeding coastal communities and fisheries. Bamboo and abaca potential. 195,000 gha total city biocapacity. Kapatagan Grande: prime vegetable cultivation potential. Kapayawan: rubber-coconut corridor to port.</td></tr>
+              <tr><td>Community</td><td>Predominantly Yakan. Small political units led by imam + council of elders. Adat governs land use allocation and rotation. High dependence on subsistence agriculture. 2 CADTs pending for 3 ICCs. Weaving (tennun) as secondary cultural livelihood (2 hrs × 2× week = 4 months per piece). Low cash income but strong social capital.</td></tr>
+              <tr><td>Rules-in-use</td><td><strong>FORMAL:</strong> IPRA (RA 8371); NCIP ancestral domain process; DENR forest and watershed management; LGU CLUP upland zoning. <strong>CUSTOMARY:</strong> Yakan adat on land rotation (kaingin calendar); communal forest reserve management; imam authority over boundary disputes. <strong>GAP:</strong> CADT not yet issued — formal tenure insecurity blocks credit access and investment; LGU CLUP may classify Yakan cultivated land as 'unproductive'.</td></tr>
+              <tr><td>Action Situations</td><td>Seasonal: when to clear, plant, harvest (guided by traditional calendar and Islamic observances — crops planted after Eid al-Fitr). Investment: whether to plant permanent crops (strongly inhibited without CADT). Market: sell copra to local trader or attempt to aggregate through cooperative. Social: whether to allow children to attend lowland school (boarding costs).</td></tr>
+              <tr><td>Evaluative Criteria</td><td>Cultural fit (does intervention respect adat and Islamic practice?); equity (does it benefit Yakan families or outside interests?); sustainability (watershed protection); accountability (who decides upland land use?); legitimacy (does the Yakan council endorse it?). Any intervention that bypasses the imam and council of elders will fail regardless of technical merit.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K5.4 -->
+      <div class="subsection" id="k5-4">
+        <h3>K5.4 — KII &amp; FGD Key Themes</h3>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>Respondent / Cohort</th><th>Expected Direction</th></tr></thead>
+            <tbody>
+              <tr><td>KII: Yakan Council of Elders</td><td>CADT process: aware it is pending, frustrated by pace. Land tenure: use adat as de facto governance but aware of its limits. Agriculture: traditional knowledge strong but openness to new varieties if trusted source. Road: consistently mentioned as most critical need. School: children's education a top aspiration if they can stay in the community.</td></tr>
+              <tr><td>KII: MIPA-BARMM (IP affairs)</td><td>Will know CADT status and timeline. Key question: what is blocking it? Is it resources, surveys, conflicting claims? Answer shapes advocacy strategy.</td></tr>
+              <tr><td>KII: City Agriculture Office (upland extension)</td><td>Ask about SCoPSA reach: has the programme been piloted in Kawman 5? What is the major barrier? Likely: distance + road + no irrigation + tenure hesitancy.</td></tr>
+              <tr><td>FGD C6 IP Leaders (Yakan)</td><td>Land tenure, road access, school, weaving economy — these four topics will dominate every session. The weaving constraint is precise: 2 hours twice per week = 4 months per piece. Document exact figures as validation data.</td></tr>
+              <tr><td>FGD C5 Adult Men (upland)</td><td>Road and transport cost. Rubber and coconut price. Whether they know about SCoPSA. Attitude toward cooperative farming. CADT awareness. View of LGU and BARMM.</td></tr>
+              <tr><td>FGD C2 Young Women 15–24</td><td>Tension between wanting to stay in the community (family, culture, weaving) vs. leaving for Zamboanga or Isabela CBD for work or education. This is the most important FGD cohort for youth retention policy.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- K5.5 -->
+      <div class="subsection" id="k5-5">
+        <h3>K5.5 — Governance &amp; Pentahelix (Upland)</h3>
+        <div class="table-wrap">
+          <table class="k5">
+            <thead><tr><th>Actor</th><th>Role in K5</th><th>Current Status</th><th>Engagement Approach</th></tr></thead>
+            <tbody>
+              <tr><td>Yakan Council of Elders</td><td>HIGHEST authority for any land-use decision in Kawman 5. FPIC is not optional.</td><td>Willing to engage based on prior meetings. Must be first contact, not last.</td><td>Visit during daytime; bring the imam-endorsed programme summary; allow elder to speak first</td></tr>
+              <tr><td>NCIP Region IX</td><td>Issues CADT — the single most critical governance action for K5.</td><td>Distant; slow; underfunded. Two CADT applications pending.</td><td>Formal letter via BARMM-MIPA; request field office visit with co-researcher; provide mapping data as contribution</td></tr>
+              <tr><td>BARMM-MAFAR</td><td>Agricultural extension, SCoPSA, irrigation budget authority.</td><td>Engaged at PLGU level. Buy-in established (see PLGU meeting notes).</td><td>Monthly coordination call; include in Pentahelix Action Workshop as co-presenter of SCoPSA plan</td></tr>
+              <tr><td>City Agriculture Office</td><td>On-ground extension, Farm School at Sumagdang.</td><td>Farm School running. Extension reach limited to accessible barangays.</td><td>Request joint upland field visit; co-design farmer training with Yakan elder input</td></tr>
+              <tr><td>Basilan State College (Sumagdang)</td><td>Agronomy research, youth training, knowledge anchor for upland.</td><td>Agricultural programmes exist but underfunded.</td><td>Connect vegetable pilot to BaSC student placements; co-author community report</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SECTION 6 ══════════ -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-title-block">
+          <h2>Cross-Kawman Instruments</h2>
+          <div class="section-desc">Diagrams applying to all five kawmans</div>
+        </div>
+      </div>
+      <p style="color:var(--slate);font-size:14px;">The following instruments apply across all five kawmans and are administered at the cross-kawman integration phase:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:0.3rem;">Iceberg — All Five Kawmans</div>
+          <div style="font-size:13px;color:var(--slate);">Comparative systems-level analysis across kawman Iceberg findings, identifying shared structural drivers and divergent mental models.</div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:0.3rem;">Causal Loop Diagrams — All Five Kawmans</div>
+          <div style="font-size:13px;color:var(--slate);">Cross-kawman CLD synthesis identifying shared reinforcing and balancing loops (e.g., the diesel-cost loop operating in K3, K4, and K5).</div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:0.3rem;">Pentahelix Action Matrix — Three Priority Interventions</div>
+          <div style="font-size:13px;color:var(--slate);">Integrated Pentahelix analysis for: (1) Cold chain + Halal processing, (2) Solar RE, (3) CADT fast-track + cooperative formation.</div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:0.3rem;">Root Cause Trees — All Five Kawmans</div>
+          <div style="font-size:13px;color:var(--slate);">Integrated root cause synthesis identifying the deepest systemic causes common to all kawmans (diesel grid, monopsony structures, tenure insecurity).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SECTION 7 ══════════ -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-title-block">
+          <h2>How to Use This Guide</h2>
+          <div class="section-desc">Validation Protocol for Field Researchers</div>
+        </div>
+      </div>
+
+      <!-- Confidence Codes -->
+      <div class="subsection" id="conf-codes">
+        <h3>Confidence Code System</h3>
+        <div class="table-wrap">
+          <table class="conf-table">
+            <thead><tr><th>Code</th><th>Meaning</th><th>When Used</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td><strong>Low confidence</strong> — single secondary source, unverified</td>
+                <td>PSA national data used as proxy; no local data available</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-M">M</span></td>
+                <td><strong>Medium</strong> — triangulated across 2+ secondary sources or 1 admin KII</td>
+                <td>This guide's pre-filled answers are code M</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-H">H</span></td>
+                <td><strong>High</strong> — community-validated but not yet at townhall</td>
+                <td>After FGD or individual KII confirms the data</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-C">C</span></td>
+                <td><strong>Community-validated</strong> — confirmed at data return townhall</td>
+                <td>After community townhall session; highest authority</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>How to Code Field Responses</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-top:0.75rem;">
+          <div style="background:var(--teal-pale);border:1px solid var(--teal);border-radius:8px;padding:1rem 1.1rem;">
+            <div style="font-weight:700;color:var(--teal);font-size:13.5px;margin-bottom:0.4rem;">✓ CONVERGENT</div>
+            <div style="font-size:12.5px;color:var(--navy-mid);">Community response aligns with this guide. Note it, move on. It confirms the secondary data at code M → upgrading toward H.</div>
+          </div>
+          <div style="background:#FEF3F2;border:1px solid #E74C3C;border-radius:8px;padding:1rem 1.1rem;">
+            <div style="font-weight:700;color:#C0392B;font-size:13.5px;margin-bottom:0.4rem;">≠ DIVERGENT</div>
+            <div style="font-size:12.5px;color:var(--navy-mid);">Community response contradicts or significantly nuances this guide. This is your most valuable data. Document verbatim. Do <strong>NOT</strong> correct the participant to match this guide.</div>
+          </div>
+          <div style="background:var(--gold-pale);border:1px solid var(--gold);border-radius:8px;padding:1rem 1.1rem;">
+            <div style="font-weight:700;color:#8B6800;font-size:13.5px;margin-bottom:0.4rem;">★ EMERGENT</div>
+            <div style="font-size:12.5px;color:var(--navy-mid);">Community raises something entirely new — not in this guide, not in ECSOM secondary data. Document carefully. Goes into the CEESAM Data Gap Register (Instrument 08, Sheet 5).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CEESAM Linkage -->
+      <div class="subsection" id="ceesam-link">
+        <h3>CEESAM Linkage — What to Do With Field Findings</h3>
+        <div class="ceesam-grid">
+          <div class="ceesam-card">
+            <div class="trigger">A number that contradicts PSA data</div>
+            <div class="action">→ CEESAM Data Gap Register · Sheet 5 'Divergences'</div>
+          </div>
+          <div class="ceesam-card">
+            <div class="trigger">A new livelihood or resource type not in the matrix</div>
+            <div class="action">→ CEESAM instrument · new row/column proposal to LAB.PH coordinator</div>
+          </div>
+          <div class="ceesam-card">
+            <div class="trigger">A governance actor not in the Governance Map</div>
+            <div class="action">→ Governance Map worksheet · add to appropriate Power-Interest quadrant</div>
+          </div>
+          <div class="ceesam-card">
+            <div class="trigger">A mental model statement (quoted verbatim)</div>
+            <div class="action">→ Field journal entry + Photovoice caption if photographable + ECSOM narrative note</div>
+          </div>
+          <div class="ceesam-card">
+            <div class="trigger">A community aspiration not captured in the Prosperity Model</div>
+            <div class="action">→ Annotate Prosperity Model worksheet with sticky note marker for townhall discussion</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Reminder -->
+      <div class="final-reminder">
+        This guide contains <strong>starting points</strong> derived from secondary data.
+        The community's lived knowledge is always more current, more precise, and more authoritative than any document produced in an office.
+        Your primary job in the field is to <strong>listen</strong>, not to confirm.
+      </div>
+    </section>
+
+  </div><!-- end .content-wrap -->
+
+  <footer id="footer">
+    <div><strong>LAB.PH</strong> · Community OS Research Toolkit · ECSOM Field Reference Guide — Complete</div>
+    <div>Isabela de Basilan · <strong>v2.1, 2026</strong> · For Research Team Use Only</div>
+  </footer>
+
+</div><!-- end #main -->
+
+<script>
+  // Sidebar active link highlighting on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('#sidebar a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`#sidebar a[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
+</body>
+</html>
